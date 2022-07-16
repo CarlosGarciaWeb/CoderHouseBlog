@@ -1,4 +1,4 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.forms import UserChangeForm
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -17,7 +17,8 @@ template_pages = {
     'blog_post': template_path+'blog_post.html',
     'add_post': template_path+'add_post.html',
     'user': template_path+'user.html',
-    'edit_profile': template_path+'edit_profile.html'
+    'edit_profile': template_path+'edit_profile.html',
+    'edit_post': template_path+'edit_post.html'
 }
 
 def Home(request):
@@ -102,6 +103,12 @@ class AddPostView(CreateView):
     def form_valid(self, form):
         form.instance.user_name = self.request.user
         return super().form_valid(form)
+
+class UpdatePostView(UpdateView):
+    model = Post
+    template_name = template_pages['edit_post']
+    fields = ['title', 'slug_post' ,'blog_meta', 'blog_content', 'topic_tag']
+
 
 class Registration(CreateView):
     form_class = SignUpForm

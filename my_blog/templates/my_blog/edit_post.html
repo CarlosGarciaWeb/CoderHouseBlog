@@ -2,13 +2,13 @@
 
 {% block title %}
 
-<title>Add Post | Python Novice Blog</title>
+<title>Edit Post | Python Novice Blog</title>
 
 {% endblock title %}
 
 {% block meta %}
 
-<meta name="description" content="Add Post to Blog">
+<meta name="description" content="Edit Post">
 
 {% endblock meta %}
 
@@ -17,8 +17,9 @@
     <br>
 {% if user.is_authenticated %}
 
+{% if user == post.user_name %}
 
-    <h1>Add Post</h1>
+    <h1>Edit Post</h1>
 
 <div class="form-group">
 
@@ -28,10 +29,20 @@
         {{ form.media }}
         {{ form.as_p }}
 
-        <button class="btn btn-secondary"> Post </button>
+        <button class="btn btn-secondary"> Edit </button>
 
     </form>
 </div>
+
+{% else %}
+
+<h1>You don't have access to edit this post.</h1>
+
+
+<br><br>
+<a href="{% url 'Home' %}">Home</a>
+
+{% endif %}
 
 {% else %}
 

@@ -11,4 +11,5 @@ urlpatterns = [
     path('edit_profile/<user>/', views.UserEditView.as_view(), name='edit_profile'),
     path('register/', views.Registration.as_view(template_name='my_blog/register.html'), name='register'),
     path('login/', views.Registration.as_view(template_name='registration/login.html'), name='login'),
+    path('edit-post/<slug:pk>', views.UpdatePostView.as_view(), name='update'),
 ]

@@ -26,7 +26,7 @@ class SignUpForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'topic_tag', 'slug_post', 'blog_meta', 'blog_content')
+        fields = ('title', 'slug_post' ,'topic_tag', 'blog_meta', 'blog_content' )
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),

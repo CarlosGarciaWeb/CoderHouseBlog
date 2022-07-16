@@ -31,7 +31,7 @@
     <div class="col-md-8 text-justify">
       <h1 class="blog-post-title mb-1">{{ post.title }} </h1>
       <br>
-      <p class="blog-post-meta"> {{ post.blog_date }} | <em>{{ post.user_name.first_name }}</em></p>
+      <p class="blog-post-meta"> {{ post.blog_date }} | <em>{{ post.user_name.first_name }}</em>   {% if user == post.user_name %} <small><a class="blog-post-data" href="{% url 'update' post.pk %}">(<em>edit</em>)</a></small></p>{% endif %}</p>
       {% if user.is_authenticated %}
       <form action="{% url 'like' post.pk %}" method="POST">
         {% csrf_token %}
