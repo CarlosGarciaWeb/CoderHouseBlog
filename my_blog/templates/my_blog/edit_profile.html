@@ -1,0 +1,24 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title %}
+
+<title>Edit Profile - {{ user }}</title>
+
+{% endblock title %}
+
+
+{% block content %}
+
+<main class="container text-align-center">
+    <h1>{{ user }}Change profile</h1>
+
+    <br>
+    <br>
+    <hr>
+    <br>
+    {% crsf_token %}
+    {% form.as_p %}
+    <button class="btn btn-secondary"> Save Changes </button>
+</main>
+
+{%endblock content %}

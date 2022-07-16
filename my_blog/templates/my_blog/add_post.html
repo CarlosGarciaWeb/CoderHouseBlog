@@ -1,0 +1,49 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title %}
+
+<title>Add Post | Python Novice Blog</title>
+
+{% endblock title %}
+
+{% block meta %}
+
+<meta name="description" content="Add Post to Blog">
+
+{% endblock meta %}
+
+{% block content %}
+<main class="container text-align-center">
+    <br>
+{% if user.is_authenticated %}
+
+
+    <h1>Add Post</h1>
+
+<div class="form-group">
+
+    <form method="POST" action="">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="btn btn-secondary"> Post </button>
+
+    </form>
+</div>
+
+{% else %}
+
+
+<br>
+
+<p class="h1">You must be logged in to create a post.</p>
+
+<a href="{% url 'login' %}">Click here to login.</a>
+
+
+{% endif %}
+</main>
+
+{% endblock content %}

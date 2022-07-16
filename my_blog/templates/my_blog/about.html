@@ -1,0 +1,83 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title%}
+
+<title>About | Python Novice Blog</title>
+
+{% endblock title %}
+
+{% block content %}
+<main class="container text-align-center about-page">
+<br>
+<br>
+<div class="row">
+  <img src="../../static/images/Novice Coder.png" alt="Python Novice Banner" class="Py-Banner">
+</div>
+<br>
+<div class="row">
+<div class="col-md">
+    <h1>Welcome to my blog, the Python Novice Blog</h1>
+    <br>
+    <br>
+</div>
+</div>
+<div class="row">
+<div class="col-md-8 text-justify">
+  <h3> What you will find in this blog: </h3>
+  <br>
+
+  <p class="text-justify">
+  This blog is dedicated to my learning path through Python. In it, you may find a little bit about my personal and professional life. What drove me to make certain decisions regarding my start, what I would have done differently, my difficulties and how I’ve faced them, as well as my most enjoyable moments through coding. My goal is to document my trajectory and see how far I have gotten. But also, maybe, be able to help someone out there in a similar position as me with my stories. If you just wanted to read what the blog is about, there you have it, plain and simple. In the next sections, you’ll learn more about me if you’d like.
+  </p>
+  <br>
+  <h3> Who the Python Novice writer is: </h3>
+  <br>
+  <p class="text-justify">
+  Hey there! Thanks for continuing reading, let’s make this rather quick, you’ll read more in my posts as they come out. I am someone that is not good at following through with something that I am not passionate about. So, although I consider myself to be smart, I am not very disciplined with something that I do not enjoy. With that said, here is a little bit about who I am and a little bit about my professional path.
+  </p>
+  <p>
+   Since little I’ve always wanted to make a difference and build something significant, something that would make an impact on someone’s life. I started studying chemistry in high school and fell in love with it. I was good at it even though I was just above average in math and physics, I still loved chemistry and I’d always give more from myself when it came to studying, which dedicating time to studying has always been my weakness. However, I dropped out because I needed money, and joined a call center, which on the first day I knew was something I never wanted to do again. Fast forward a year or two, with the help of a great friend, my ability to learn systems and processes rather quickly, as well as, my critical and analytical mindset got me a job as an Accounts Receivable Associate in a large company with good pay. I never thought of myself as a person in a cubicle but I actually enjoyed it, time would fly by and I end up staying after hours without noticing. 
+  </p>
+  <p > Now, most recently, coding is the thing giving me that feeling, the feeling that time flies. I know I may have started for what I think are the wrong reasons, but I definitely stayed for all the right ones. I can stay for hours trying my best to solve a problem in codewars or trying to get a form/button to work, and yet I still feel whole. I love reading the documentation to learn new processes and I always look forward to what's ahead, and in programming the possibilities for learning and creating are endless.
+
+  </p>
+  <p>Thanks for taking the time to read. Click <a href="/">here</a> to go back to the home page and read my latest posts.</p>
+
+</div>
+
+<div class="col-md-4">
+    <div class="position-sticky" style="top: 2rem;">
+      <div class="p-4 mb-3 rounded">
+        <!-- <h4 class="fst-italic">About</h4>
+    <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p> -->
+        <div class="">
+          <form class="form" id="search-bar">
+            <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
+              aria-label="Search">
+
+          </form>
+        </div>
+
+        <div class="p-4">
+          <h4 class="fst-italic">Topics</h4>
+          <ol class="list-unstyled mb-0">
+            <li><a href="#">Variables</a></li>
+            <li><a href="#">Data Types</a></li>
+            <li><a href="#">Logic Statements: If, Elif and Else</a></li>
+            <li><a href="#">Lists</a></li>
+            <li><a href="#">Loops: For and Whiles</a></li>
+            <li><a href="#">Functions</a></li>
+            <li><a href="#">Functions Parameters</a></li>
+            <li><a href="#">Dictionaries</a></li>
+            <li><a href="#">Object Oriented Programming (OOP)</a></li>
+            <li><a href="#">Libraries</a></li>
+            <li><a href="#">Flask</a></li>
+            <li><a href="#">Django</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,127 @@
+{%extends 'my_blog/base.html' %}
+
+
+<!-- Meta Description -->
+{% block meta %}
+<meta name="description" content="{{post.blog_meta}}">
+{% endblock meta %}
+
+<!-- Blog Title -->
+{% block title %}
+<title>{{ post.title }}</title>
+{% endblock title %}
+
+<!-- Blog Content -->
+{% block content %}
+<main class="container text-align-center about-page">
+    <br>
+    <br>
+    <div class="row">
+      <img src="../../static/images/Novice Coder.png" alt="Python Novice Banner" class="Py-Banner">
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-md">
+        <h1></h1>
+        <br>
+        <br>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-8 text-justify">
+      <h1 class="blog-post-title mb-1">{{ post.title }} </h1>
+      <br>
+      <p class="blog-post-meta"> {{ post.blog_date }} | <em>{{ post.user_name.first_name }}</em></p>
+      {% if user.is_authenticated %}
+      <form action="{% url 'like' post.pk %}" method="POST">
+        {% csrf_token %}
+        {% if liked %}
+          <button type="submit" class="btn btn-sm" name="post_id" value="{{ post.id }}"><i style="color:red" class="fa-solid fa-heart"></i></button>
+        {% else %}
+          <button type="submit" class="btn btn-sm" name="post_id" value="{{ post.id }}"><i class="fa-solid fa-heart"></i></button>
+        
+        {% endif %}
+        {% else %}
+        {% endif %}
+      </form>
+      <p><em>{{ post.total_likes }} likes</em></p>
+      {{ post.blog_content|safe }}
+      <br>
+      <br>
+      <div class="comment section" >
+        <h3>Comments</h3>
+        <br>
+        {% if not post.comments.all %}
+
+        <p>There are no comments in this post yet. <a href="#">Click here to add one</a></p>
+
+        {% else %}
+
+          {% for comment in post.comments.all %}
+          <div class="container-sm text-white rounded">
+            <p><strong><em>{{ comment.name }} | {{ comment.date }}</em></strong></p>
+            <br>
+            <div class="text-center">
+            <p>
+              {{ comment.body }}
+            </p></div>
+            <br></div><br>
+          {% endfor %}
+
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem;">
+          <div class="p-4 mb-3 rounded">
+           <div class="">
+              <form class="form" id="search-bar">
+                <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
+                  aria-label="Search">
+    
+              </form>
+            </div>
+    
+            <br>
+            <div class="row mb-2">
+              <!--Start of most recent Post-->
+
+              <div class="col">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                  <div class="col p-4 d-flex flex-column position-static featurepost">
+                    <p class="d-inline-block mb-2 text-black">Featured Post</p>
+                    <a class="blog-post-data" href="{% url 'blogpost' post_featured.slug_post %}"><h3 class="mb-0">{{ post_featured.title }}</h3></a>
+                    <div class="mb-1 text-muted">{{ post_featured.blog_date }}</div>
+                    <div class="mb-1 text-muted">{{ post_featured.blog_meta|safe|slice:"100"}}...</div>
+                    <br>
+                    <!-- <p>Brief Description of feature post. Must be at least 100 characters. I think.</p> -->
+                  </div>
+
+                </div>
+              </div>
+
+            <div class="p-4">
+              <h4 class="fst-italic">Topics</h4>
+              <ol class="list-unstyled mb-0">
+                <li><a href="#">Variables</a></li>
+                <li><a href="#">Data Types</a></li>
+                <li><a href="#">Logic Statements: If, Elif and Else</a></li>
+                <li><a href="#">Lists</a></li>
+                <li><a href="#">Loops: For and Whiles</a></li>
+                <li><a href="#">Functions</a></li>
+                <li><a href="#">Functions Parameters</a></li>
+                <li><a href="#">Dictionaries</a></li>
+                <li><a href="#">Object Oriented Programming (OOP)</a></li>
+                <li><a href="#">Libraries</a></li>
+                <li><a href="#">Flask</a></li>
+                <li><a href="#">Django</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </main>
+
+{% endblock content %}

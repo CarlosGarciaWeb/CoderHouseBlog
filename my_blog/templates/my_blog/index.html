@@ -1,0 +1,130 @@
+{% extends 'my_blog/base.html' %}
+
+
+
+
+{% block content %}
+  <br>
+  <br>
+    <main class="container text-align-center">
+
+      <div class="p-4 p-md-5 mb-4 text-white rounded">
+        <div class="row">
+        <div class="col">
+          <h1 class="display-4 fst-italic">Welcome to the Python Novice Blog</h1>
+          <p class="lead my-3">This blog is my attempt to document my learning process in coding. Specifically Python. I
+            want to share why I started and how I started. Hopefully, my stories can help if you are someone that is
+            starting your learning path on Python.</p>
+          <p class="lead mb-0">Curious about more? <a href="{% url 'about' %}" class="text-white fw-bold">read here.</a></p>
+          <img class="rounded mx-auto d-block" src="../../static/images/Coding-Icon.png" alt="Coding Icon">
+        </div>
+        <!-- <div class="col text-center">
+         
+        </div> -->
+      </div>
+      </div>
+
+      <div class="row g-5">
+        <div class="col-md-8">
+          {% for post in posts %}
+          <article class="blog-post">
+            <h2 class="blog-post-title mb-1"><a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">{{ post.title }}</a></h2>
+            <p class="blog-post-meta">{{ post.blog_date }} | <em>{{ post.user_name.first_name }} </em></p>
+            <p><em>{{ post.total_likes }} likes</em></p>
+            {{ post.blog_content|safe|slice:":1000" }} <a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">...</a>
+            
+            <p><em>Tags:</em>  {% for topic in post.topic_tag.all %}
+            
+              <em>{{ topic.topic_tag }}</em>
+            {% endfor %}</p>
+          </article>
+          {% endfor %}
+          <nav class="blog-pagination" aria-label="Pagination">
+          </nav>
+
+        </div>
+
+        <div class="col-md-4">
+          <div class="position-sticky" style="top: 2rem;">
+            <div class="p-4 mb-3 rounded">
+                 <div class="row">
+                <form class="form" id="search-bar">
+                  <input class="form-control-sm w-75" type="text" placeholder="Search"
+                    aria-label="Search">
+                    <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+              </div>
+              <br>
+              <div class="row mb-2">
+                
+
+                {% if first_post.title == most_liked.title %}
+
+                <!--Start of most liked Post-->
+                <div class="col-md">
+                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static featurepost">
+                      <strong class="d-inline-block mb-2 text-black">Featured Post</strong>
+                      <a href="{% url 'blogpost' most_liked.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ most_liked.title }}</h3></a>
+                      <div class="mb-1 text-muted">{{ most_liked.blog_date}}</div>
+                      <div class="mb-1 text-muted">{{ most_liked.blog_meta|safe|slice:"100"}}...</div>
+                    </div>
+
+                  </div>
+                </div>
+                <!--End of liked post -->
+                {% else %}
+
+                <!--Start of most liked Post-->
+                <div class="col-md">
+                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static featurepost">
+                      <strong class="d-inline-block mb-2 text-black">Featured Post</strong>
+                      <a href="{% url 'blogpost' most_liked.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ most_liked.title }}</h3></a>
+                      <div class="mb-1 text-muted">{{ most_liked.blog_date}}</div>
+
+                    </div>
+
+                  </div>
+                </div>
+                <!--End of liked post -->
+
+                <!--Start of first post -->
+                <div class="col-md">
+                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static featurepost">
+                      
+                      <strong class="d-inline-block mb-2 text-dark">My First Post</strong>
+                      <a href="{% url 'blogpost' first_post.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ first_post.title }}</h3></a>
+                      <div class="mb-1 text-muted"><p>{{ first_post.blog_date }}</p> </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="p-4">
+                <h4 class="fst-italic">Topics</h4>
+                <ol class="list-unstyled mb-0">
+                  <li><a href="#">Variables</a></li>
+                  <li><a href="#">Data Types</a></li>
+                  <li><a href="#">Logic Statements: If, Elif and Else</a></li>
+                  <li><a href="#">Lists</a></li>
+                  <li><a href="#">Loops: For and Whiles</a></li>
+                  <li><a href="#">Functions</a></li>
+                  <li><a href="#">Functions Parameters</a></li>
+                  <li><a href="#">Dictionaries</a></li>
+                  <li><a href="#">Object Oriented Programming (OOP)</a></li>
+                  <li><a href="#">Libraries</a></li>
+                  <li><a href="#">Flask</a></li>
+                  <li><a href="#">Django</a></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+{% endblock content %}
