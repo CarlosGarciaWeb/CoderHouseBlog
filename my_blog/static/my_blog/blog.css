@@ -4,9 +4,19 @@
   background-color: #6E85B7;
 }
 
-.blog-title, .blog-post-data {
+.blog-title {
   color: #212529;
   text-decoration: inherit;
+}
+
+
+.blog-post-data {
+  color:  #5252bb;
+  text-decoration: inherit;
+}
+
+.blog-post-data:hover {
+  color: #444442;
 }
 
 .blog-title:hover {

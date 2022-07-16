@@ -74,7 +74,7 @@
                 </div>
                 <!--End of liked post -->
                 {% else %}
-
+                <div class="row mb-2">
                 <!--Start of most liked Post-->
                 <div class="col-md">
                   <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -82,13 +82,15 @@
                       <strong class="d-inline-block mb-2 text-black">Featured Post</strong>
                       <a href="{% url 'blogpost' most_liked.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ most_liked.title }}</h3></a>
                       <div class="mb-1 text-muted">{{ most_liked.blog_date}}</div>
+                      <div class="mb-1 text-muted">{{ most_liked.blog_meta|safe|slice:"100"}}...</div>
 
                     </div>
 
                   </div>
                 </div>
                 <!--End of liked post -->
-
+                </div>
+                <div class="row mb-2">
                 <!--Start of first post -->
                 <div class="col-md">
                   <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -97,10 +99,12 @@
                       <strong class="d-inline-block mb-2 text-dark">My First Post</strong>
                       <a href="{% url 'blogpost' first_post.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ first_post.title }}</h3></a>
                       <div class="mb-1 text-muted"><p>{{ first_post.blog_date }}</p> </div>
+                      <div class="mb-1 text-muted">{{ first_post.blog_meta|safe|slice:"100"}}...</div>
                       
                     </div>
                   </div>
                 </div>
+              </div>
                 {% endif %}
               </div>
               <div class="p-4">
