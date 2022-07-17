@@ -12,4 +12,5 @@ urlpatterns = [
     path('register/', views.Registration.as_view(template_name='my_blog/register.html'), name='register'),
     path('login/', views.Registration.as_view(template_name='registration/login.html'), name='login'),
     path('edit-post/<slug:pk>', views.UpdatePostView.as_view(), name='update'),
+    path('delete-post/<slug:pk>', views.DeletePostView.as_view(), name='delete'),
 ]

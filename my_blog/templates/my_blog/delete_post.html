@@ -1,0 +1,64 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title %}
+
+<title>Delete Post | Python Novice Blog</title>
+
+{% endblock title %}
+
+{% block meta %}
+
+<meta name="description" content="Edit Post">
+
+{% endblock meta %}
+
+{% block content %}
+<main class="container text-align-center">
+    <br>
+{% if user.is_authenticated %}
+
+{% if user == post.user_name %}
+
+    <h1>Delete Post | "<a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">{{ post.title }}</a>"</h1>
+    <br>
+    <br>
+    <h2>Would you prefer to edit this post? <a href="{% url 'update' post.pk %}">Click here</a> to edit.</h2>
+    <br>
+    <br>
+<div class="form-group">
+    <h2>If you are sure you want to continue with the deletion of this post, click the delete button below.</h2>
+    <br>
+    <br>
+    <form method="POST" action="">
+
+        {% csrf_token %}
+
+        <button class="btn btn-danger"> Delete </button>
+
+    </form>
+</div>
+
+{% else %}
+
+<h1>You don't have access to delete this post.</h1>
+
+
+<br><br>
+<a href="{% url 'Home' %}">Home</a>
+
+{% endif %}
+
+{% else %}
+
+
+<br>
+
+<p class="h1">You must be logged in to delete a post.</p>
+
+<a href="{% url 'login' %}">Click here to login.</a>
+
+
+{% endif %}
+</main>
+
+{% endblock content %}

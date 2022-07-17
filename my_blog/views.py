@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserChangeForm
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -18,7 +18,8 @@ template_pages = {
     'add_post': template_path+'add_post.html',
     'user': template_path+'user.html',
     'edit_profile': template_path+'edit_profile.html',
-    'edit_post': template_path+'edit_post.html'
+    'edit_post': template_path+'edit_post.html',
+    'delete_post': template_path+'delete_post.html'
 }
 
 def Home(request):
@@ -86,7 +87,10 @@ def Like(request, pk):
     return HttpResponseRedirect(reverse('blogpost', args=[str(post_slug)]))
 
 def User(request, user):
-    return render(request, template_pages['user'])
+    context = {
+        'user_passed_in': user
+    }
+    return render(request, template_pages['user'], context=context)
 
 class UserEditView(CreateView):
     form_class = UserChangeForm
@@ -108,6 +112,13 @@ class UpdatePostView(UpdateView):
     model = Post
     template_name = template_pages['edit_post']
     fields = ['title', 'slug_post' ,'blog_meta', 'blog_content', 'topic_tag']
+
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = template_pages['delete_post']
+    success_url = reverse_lazy('Home')
+
 
 
 class Registration(CreateView):

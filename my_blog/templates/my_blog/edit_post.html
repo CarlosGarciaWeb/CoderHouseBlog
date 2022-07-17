@@ -19,7 +19,7 @@
 
 {% if user == post.user_name %}
 
-    <h1>Edit Post</h1>
+    <h1>Edit Post | "<a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">{{ post.title }}</a>"</h1>
 
 <div class="form-group">
 
@@ -49,7 +49,7 @@
 
 <br>
 
-<p class="h1">You must be logged in to create a post.</p>
+<p class="h1">You must be logged in to edit a post.</p>
 
 <a href="{% url 'login' %}">Click here to login.</a>
 
