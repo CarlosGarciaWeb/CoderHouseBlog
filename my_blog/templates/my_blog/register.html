@@ -1,7 +1,15 @@
 {% extends 'my_blog/base.html' %}
+{% block title %}
+{% if user.is_authenticated %}
 
-{% block title %} <title>Register | Python Novice Blog</title>{% endblock title %}
+ <title> Python Novice Blog </title>
 
+{% else %}
+
+<title>Register | Python Novice Blog</title>
+
+{% endif %}
+{% endblock title %}
 {% block meta %}
 <meta name="description" content="If you'd like to leave a comment, like or save posts to read later from the Python Novice Blog, please register here.">
 

@@ -10,15 +10,21 @@
 {% block content %}
 
 <main class="container text-align-center">
-    <h1>{{ user }}Change profile</h1>
+    <br>
+    <h1>{{ user }} | Change profile</h1>
 
     <br>
     <br>
     <hr>
     <br>
-    {% crsf_token %}
-    {% form.as_p %}
+<div class="form-group">
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
     <button class="btn btn-secondary"> Save Changes </button>
+</form>
+</div>
 </main>
 
-{%endblock content %}
+{% endblock content %}

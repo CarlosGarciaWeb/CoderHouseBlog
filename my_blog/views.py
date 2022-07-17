@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from .models import Post
 from django.http import HttpRequest, HttpResponseRedirect
-from .forms import PostForm, SignUpForm
+from .forms import PostForm, SignUpForm, ProfileChangeForm
 import os
 import random
 # Create your views here.
@@ -87,15 +87,19 @@ def Like(request, pk):
     return HttpResponseRedirect(reverse('blogpost', args=[str(post_slug)]))
 
 def User(request, user):
+
     context = {
         'user_passed_in': user
     }
     return render(request, template_pages['user'], context=context)
 
-class UserEditView(CreateView):
-    form_class = UserChangeForm
+class UserEditView(UpdateView):
+    form_class = ProfileChangeForm
     template_name = template_pages['edit_profile']
     success_url = reverse_lazy('Home')
+
+    def get_object(self):
+        return self.request.user
 
 
 class AddPostView(CreateView):
