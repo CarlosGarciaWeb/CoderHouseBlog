@@ -2,17 +2,18 @@ from django import forms
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
     
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'captcha')
     
 
     def __init__(self, *args, **kwargs):
@@ -24,10 +25,12 @@ class SignUpForm(UserCreationForm):
 
 
 class PostForm(forms.ModelForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
     class Meta:
         model = Post
-        fields = ('title', 'slug_post' ,'topic_tag', 'blog_meta', 'blog_content' )
-
+        fields = ('title', 'slug_post' ,'topic_tag', 'blog_meta', 'blog_content', 'captcha' )
+        
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'topic_tag': forms.SelectMultiple(attrs={'class': 'form-check', 'type': 'checkbox'}),
@@ -40,11 +43,11 @@ class ProfileChangeForm(UserChangeForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
     
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email', 'captcha')
     
 
     def __init__(self, *args, **kwargs):
