@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from .models import Post, Topics
+from .models import Post, Topics, UserProfile
 from django.http import HttpRequest, HttpResponseRedirect
 from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm
 import os
@@ -83,10 +83,10 @@ def BlogPost(request, blog_slug):
     header_image_bool = False
     if post_data.header_image:
         header_image_bool = True
-        print(header_image_bool)
+
     else:
         header_image_bool = False
-        print(header_image_bool)
+
     if post_data.likes.filter(id=request.user.id).exists():
         liked = True
     form = SearchForm()
@@ -123,7 +123,6 @@ def UserView(request, user_name):
     user_id = User.objects.get(username=request.user)
     
     liked_posts = Post.objects.filter(likes=user_id)
-    print(liked_posts)
 
     context = {
         'liked_post_all': liked_posts,        
@@ -164,7 +163,7 @@ class DeletePostView(DeleteView):
 
 
 def SearchedPostView(request, search_term):
-    print(Post.objects.filter(blog_content__contains="About"))
+
     all_posts = Post.objects.all()
     post_data = Post.objects.filter(title__contains=search_term) | Post.objects.filter(blog_content__contains=search_term)
     first_post = all_posts[0]
