@@ -17,7 +17,11 @@
     <br>
     <br>
     <div class="row">
+      {% if header_image_bool %}
+      <img src="{{ post.header_image.url }}" alt="{{ post.title }}" class="Py-Banner">
+      {% else %}
       <img src="../../static/images/Novice Coder.png" alt="Python Novice Banner" class="Py-Banner">
+      {% endif %}
     </div>
     <br>
     <div class="row">

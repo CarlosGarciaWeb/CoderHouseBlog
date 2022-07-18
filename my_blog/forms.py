@@ -29,7 +29,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'slug_post' ,'topic_tag', 'blog_meta', 'blog_content', 'captcha' )
+        fields = ('title', 'slug_post' , 'header_image' ,'topic_tag', 'blog_meta', 'blog_content', 'captcha' )
         
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),

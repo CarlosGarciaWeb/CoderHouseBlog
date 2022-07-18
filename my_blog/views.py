@@ -80,6 +80,13 @@ def BlogPost(request, blog_slug):
     
     total_likes = post_data.total_likes()
     liked = False
+    header_image_bool = False
+    if post_data.header_image:
+        header_image_bool = True
+        print(header_image_bool)
+    else:
+        header_image_bool = False
+        print(header_image_bool)
     if post_data.likes.filter(id=request.user.id).exists():
         liked = True
     form = SearchForm()
@@ -93,7 +100,8 @@ def BlogPost(request, blog_slug):
         "likes": total_likes,
         "liked": liked,
         'post_featured': new_feature_post,
-        'form': form
+        'form': form,
+        'header_image_bool': header_image_bool,
     }
     return render(request, template_pages['blog_post'], context=context)
 
@@ -144,8 +152,8 @@ class AddPostView(CreateView):
 class UpdatePostView(UpdateView):
     model = Post
     template_name = template_pages['edit_post']
-    fields = ['title', 'slug_post' ,'blog_meta', 'blog_content', 'topic_tag']
-
+    fields = ['title', 'slug_post' , 'header_image' , 'blog_meta', 'blog_content', 'topic_tag']
+    success_url = reverse_lazy('Home')
 
 class DeletePostView(DeleteView):
     model = Post

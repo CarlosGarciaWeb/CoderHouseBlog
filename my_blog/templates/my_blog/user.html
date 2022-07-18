@@ -45,7 +45,7 @@
           <ul>
               {% for liked_post in liked_post_all %}
 
-              <li>"<a>{{ liked_post.title }}</a>   "  --  {% for topic in liked_post.topic_tag.all %}<small><em>({{ topic }})</em></small> {% endfor %}</li>
+              <li>"<a>{{ liked_post.title }}</a>"  --  {% for topic in liked_post.topic_tag.all %}<small><em>({{ topic }})</em></small> {% endfor %}</li>
 
               {% endfor %}
           </ul>
