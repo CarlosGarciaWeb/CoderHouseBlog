@@ -36,6 +36,25 @@
     <div class="row">
         <h1>Welcome, {{ user }}! </h1> <div class="position-relative end-40"><em><a href="{% url 'add_post' %}">Add Post</a></em> / <em><a href="{% url 'edit_profile' %}">Edit Profile</a></em></div>
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-6">
+          <h3>Liked Posts</h3>
+          
+          <ul>
+              {% for liked_post in liked_post_all %}
+
+              <li>"<a>{{ liked_post.title }}</a>   "  --  {% for topic in liked_post.topic_tag.all %}<small><em>({{ topic }})</em></small> {% endfor %}</li>
+
+              {% endfor %}
+          </ul>
+
+        </div>
+        <!-- <div class="col-6">
+          <h3>Posts saved for later</h3>
+        </div> -->
+    </div>  
 
 
 {% else %}

@@ -1,10 +1,12 @@
+from pydoc_data.topics import topics
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserChangeForm
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from .models import Post
+from .models import Post, Topics
 from django.http import HttpRequest, HttpResponseRedirect
-from .forms import PostForm, SignUpForm, ProfileChangeForm
+from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm
 import os
 import random
 # Create your views here.
@@ -19,7 +21,8 @@ template_pages = {
     'user': template_path+'user.html',
     'edit_profile': template_path+'edit_profile.html',
     'edit_post': template_path+'edit_post.html',
-    'delete_post': template_path+'delete_post.html'
+    'delete_post': template_path+'delete_post.html',
+    'search_post': template_path+'search_posts.html'
 }
 
 def Home(request):
@@ -29,22 +32,36 @@ def Home(request):
     most_liked = random.choice(most_liked)
     first_post = post_data[len(post_data)-1]
     content = [blogcontent for blogcontent in post_data]
+    form = SearchForm()
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_term = form.cleaned_data['search_term']
+            return redirect(reverse('search', kwargs={'search_term': search_term}))
+            
     context = {
         'posts': post_data,
         'first_post': first_post,
-        'most_liked': most_liked
+        'most_liked': most_liked,
+        'form': form,
 
     }
     return render(request, template_pages['home'], context=context)
 
 
 def About(request):
-    return render(request, template_pages['about'])
+    form = SearchForm(request.POST)
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_term = form.cleaned_data['search_term']
+            return redirect(reverse('search', kwargs={'search_term': search_term}))
+    return render(request, template_pages['about'], context={'form': form})
 
 
 def BlogPost(request, blog_slug):
     post_data = Post.objects.get(slug_post=blog_slug)
-    all_post_data = Post.objects.all().order_by('-blog_date')
+    all_post_data = Post.objects.all()
     most_likes = max([post.total_likes() for post in all_post_data])
     most_liked_all = [post for post in all_post_data if post.total_likes() == most_likes]
     most_liked = random.choice(most_liked_all)
@@ -65,11 +82,18 @@ def BlogPost(request, blog_slug):
     liked = False
     if post_data.likes.filter(id=request.user.id).exists():
         liked = True
+    form = SearchForm()
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_term = form.cleaned_data['search_term']
+            return redirect(reverse('search', kwargs={'search_term': search_term}))
     context = {
         "post": post_data,
         "likes": total_likes,
         "liked": liked,
-        'post_featured': new_feature_post
+        'post_featured': new_feature_post,
+        'form': form
     }
     return render(request, template_pages['blog_post'], context=context)
 
@@ -86,10 +110,15 @@ def Like(request, pk):
     post_slug = post.slug_post
     return HttpResponseRedirect(reverse('blogpost', args=[str(post_slug)]))
 
-def User(request, user):
+
+def UserView(request, user_name):
+    user_id = User.objects.get(username=request.user)
+    
+    liked_posts = Post.objects.filter(likes=user_id)
+    print(liked_posts)
 
     context = {
-        'user_passed_in': user
+        'liked_post_all': liked_posts,        
     }
     return render(request, template_pages['user'], context=context)
 
@@ -124,6 +153,38 @@ class DeletePostView(DeleteView):
     success_url = reverse_lazy('Home')
 
 
+
+
+def SearchedPostView(request, search_term):
+    print(Post.objects.filter(blog_content__contains="About"))
+    all_posts = Post.objects.all()
+    post_data = Post.objects.filter(title__contains=search_term) | Post.objects.filter(blog_content__contains=search_term)
+    first_post = all_posts[0]
+    most_likes = max([post.total_likes() for post in all_posts])
+    most_liked = [post for post in all_posts if post.total_likes() == most_likes]
+    most_liked = random.choice(most_liked)
+    search_found = False
+    total_found = len(post_data)
+    if len(post_data) > 0:    
+        search_found = True
+    else:
+        search_found = False
+    form = SearchForm()
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_term = form.cleaned_data['search_term']
+            return redirect(reverse('search', kwargs={'search_term': search_term}))
+    context = {
+        'posts': post_data,
+        'first_post': first_post,
+        'most_liked': most_liked,
+        'search_found': search_found,
+        'search_term': search_term,
+        'total_found': total_found,
+        'form': form,
+    }
+    return render(request, template_pages['search_post'], context=context)
 
 class Registration(CreateView):
     form_class = SignUpForm
