@@ -21,6 +21,7 @@ class Post(models.Model):
     topic_tag = models.ManyToManyField(Topics, related_name="blog_post")
     slug_post = models.SlugField(null=True, unique=True)
     likes = models.ManyToManyField(User, related_name="blog_post", default=0)
+    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def total_likes(self):
         return self.likes.count()

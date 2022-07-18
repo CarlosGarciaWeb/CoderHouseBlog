@@ -117,6 +117,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
+# User pip install Pillow for images
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
