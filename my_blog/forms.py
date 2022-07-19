@@ -1,6 +1,7 @@
+from tkinter import Widget
 from turtle import width
 from django import forms
-from .models import Post, UserProfile
+from .models import Post, UserProfile, Comments
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from captcha.fields import ReCaptchaField
@@ -51,6 +52,13 @@ class EditProfileDetailsForm(forms.ModelForm):
             'portfolio_link': forms.URLInput(attrs={'class': 'form-control'}),
             'bio': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+# class CommentForm(forms.ModelForm):
+#     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
+#     class Meta:
+#         model = Comments
 
 
 class ProfileChangeForm(UserChangeForm):

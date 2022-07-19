@@ -1,4 +1,5 @@
-{%extends 'my_blog/base.html' %}
+{% extends 'my_blog/base.html' %}
+{% load static %}
 
 
 <!-- Meta Description -->
@@ -59,13 +60,26 @@
 
           {% for comment in post.comments.all %}
           <div class="container-sm rounded comment-section">
-            <p><strong><em>{{ comment.name }} | {{ comment.date }}</em></strong></p>
-            <br>
-            <div class="text-center">
+            <p style="margin-top: 5px;">
+            {% if comment.user_name.userprofile.profile_picture.url %}
+            <img style="margin-top: 5px;" width="75" src="{{ comment.user_name.userprofile.profile_picture.url}}" alt="Profile Picture {{ comment.user_name }}">
+            {% else %}
+            <img style="margin-top: 5px;" width="75" src="{% static 'my_blog/images/default-profile-picture.png' %}" alt="Profile Picture {{ comment.user_name }}"> 
+            
+            {% endif %}
+            
+            {{ comment.user_name }} | <small>{{ comment.date }}</small></p>
+
+            
+            <p>{% if user.userprofile.github_link %}<a href="{{ user.userprofile.github_link }}"><i class="fa-brands fa-github"></i></a>  |   {% endif %} 
+              {% if user.userprofile.linkedin_link %}<a href="{{ user.userprofile.linkedin_link }}"><i class="fa-brands fa-linkedin"></i></a>  |   {% endif %}
+              {% if user.userprofile.portfolio_link %}<a href="{{ user.userprofile.portfolio_link }}"><i class="fa-solid fa-globe"></i></a>{% endif %}</p>                     
+            
+              <div class="text-center">
             <p>
               {{ comment.body }}
             </p></div>
-            <br></div><br>
+<br></div><br>
           {% endfor %}
 
         {% endif %}
