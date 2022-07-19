@@ -40,33 +40,53 @@
     <br>
     <br>
     <div class="row">
+      <div class="col-6">
       <br>
       <div class="container rounded-circle">
       <img src="{{ user.userprofile.profile_picture.url }}" alt="Python Novice Writer">
-    </div></div>
+    </div>
 {% else %}
+{% endif %}
+
+
+{% if user.userprofile.github_link or user.userprofile.linked_link or user.userprofile.portfolio_link %}
+
+      <br>
+      {% if user.userprofile.github_link %}
+      <p><i class="fa-brands fa-github"></i> {{ user.userprofile.github_link }}</p>
+      <br>
+      {% endif %}
+      {% if user.userprofile.linkedin_link %}
+      <p><i class="fa-brands fa-linkedin"></i> {{ user.userprofile.linkedin_link }}</p>
+      <br>
+      {% endif %}
+      {% if user.userprofile.portfolio_link %}
+      <p><i class="fa-solid fa-globe"></i> {{ user.userprofile.portfolio_link }}</p>
+      <br>
+      {% endif %}
+
+
 {% endif %}
 
 {% if user.userprofile.bio %}
     <br>
     <br>
-    <div class="row">
       <h3>Bio:</h3>
       <br>
       <p>{{ user.userprofile.bio }}</p>
+      <br>
     </div>
 {% else %}
 {% endif %}
     <br>
     <br>
-    <div class="row">
         <div class="col-6">
           <h3>Liked Posts</h3>
           
           <ul>
               {% for liked_post in liked_post_all %}
 
-              <li>"<a class="blog-post-data" href="{% url 'blogpost' liked_post.slug_post %}"><strong>{{ liked_post.title }}</a></strong>"  --  {% for topic in liked_post.topic_tag.all %}<small><em>({{ topic }})</em></small> {% endfor %}</li>
+              <li>"<a class="blog-post-data" href="{% url 'blogpost' liked_post.slug_post %}"><strong>{{ liked_post.title }}</a></strong>"  --  {% for topic in liked_post.topic_tag.all %}<small><em>(<a href="{% url 'search' topic|stringformat:'s' %}">{{ topic }}</a>)</em></small> {% endfor %}</li>
 
               {% endfor %}
           </ul>

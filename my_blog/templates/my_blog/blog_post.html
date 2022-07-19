@@ -58,7 +58,7 @@
         {% else %}
 
           {% for comment in post.comments.all %}
-          <div class="container-sm text-white rounded">
+          <div class="container-sm rounded comment-section">
             <p><strong><em>{{ comment.name }} | {{ comment.date }}</em></strong></p>
             <br>
             <div class="text-center">
@@ -104,18 +104,17 @@
             <div class="p-4">
               <h4 class="fst-italic">Topics</h4>
               <ol class="list-unstyled mb-0">
-                <li><a href="#">Variables</a></li>
-                <li><a href="#">Data Types</a></li>
-                <li><a href="#">Logic Statements: If, Elif and Else</a></li>
-                <li><a href="#">Lists</a></li>
-                <li><a href="#">Loops: For and Whiles</a></li>
-                <li><a href="#">Functions</a></li>
-                <li><a href="#">Functions Parameters</a></li>
-                <li><a href="#">Dictionaries</a></li>
-                <li><a href="#">Object Oriented Programming (OOP)</a></li>
-                <li><a href="#">Libraries</a></li>
-                <li><a href="#">Flask</a></li>
-                <li><a href="#">Django</a></li>
+                <li><a href="{% url 'search' 'Variables' %}">Variables</a></li>
+                <li><a href="{% url 'search' 'Data Types' %}">Data Types</a></li>
+                <li><a href="{% url 'search' 'Logic Statements' %}">Logic Statements: If, Elif and Else</a></li>
+                <li><a href="{% url 'search' 'Lists' %}">Lists</a></li>
+                <li><a href="{% url 'search' 'Loops' %}">Loops: For and Whiles</a></li>
+                <li><a href="{% url 'search' 'Functions' %}">Functions</a></li>
+                <li><a href="{% url 'search' 'Dictionaries' %}">Dictionaries</a></li>
+                <li><a href="{% url 'search' 'Object Oriented Programming' %}">Object Oriented Programming (OOP)</a></li>
+                <li><a href="{% url 'search' 'Libraries' %}">Libraries</a></li>
+                <li><a href="{% url 'search' 'Flask' %}">Flask</a></li>
+                <li><a href="{% url 'search' 'Django' %}">Django</a></li>
               </ol>
             </div>
           </div>

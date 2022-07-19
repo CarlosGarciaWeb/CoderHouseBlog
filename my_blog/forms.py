@@ -57,5 +57,5 @@ class ProfileChangeForm(UserChangeForm):
 
 
 class SearchForm(forms.Form):
-    search_term = forms.CharField(label='', required=False, max_length=50, widget=forms.TextInput(attrs={'class': 'form-control-sm w-75', 'placeholder': 'Search'}))
+    search_term = forms.CharField(label='', required=False, max_length=50, widget=forms.TextInput(attrs={'class': 'form-control-sm w-75', 'placeholder': 'Search', 'required': 'True'}))
 

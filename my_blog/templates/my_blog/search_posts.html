@@ -27,11 +27,31 @@
             
             <p><em>Tags:</em>  {% for topic in post.topic_tag.all %}
             
-              (<small><em>{{ topic.topic_tag }}</em></small>)
+              (<small><em><a href="{% url 'search' topic.topic_tag|stringformat:'s' %}">{{ topic.topic_tag }}</a></em></small>)
             {% endfor %}</p>
           <hr>
           </article>
           {% endfor %}
+
+
+          {% for post in post_with_topics %}
+          <article class="blog-post">
+            <h2 class="blog-post-title mb-1"><a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">{{ post.title }}</a></h2>
+            <p class="blog-post-meta">{{ post.blog_date }} | <em>{{ post.user_name.first_name }} </em></p>
+            <p><em>{{ post.total_likes }} likes</em>    {% if user == post.user_name %} <small><a class="blog-post-data" href="{% url 'update' post.pk %}">(<em>edit</em>)</a></small> / <small><a class="blog-post-data" href="{% url 'delete' post.pk %}">(<em>delete</em>)</a></small></p>{% endif %}
+            <br>
+            <br>
+            {{ post.blog_content|safe|slice:":200" }} <a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">...</a>
+            
+            <p><em>Tags:</em>  {% for topic in post.topic_tag.all %}
+            
+              (<small><em><a href="{% url 'search' topic.topic_tag|stringformat:'s' %}">{{ topic.topic_tag }}</a></em></small>)
+            {% endfor %}</p>
+          <hr>
+          </article>
+          {% endfor %}
+
+
           <nav class="blog-pagination" aria-label="Pagination">
           </nav>
 
@@ -113,18 +133,17 @@
               <div class="p-4">
                 <h4 class="fst-italic">Topics</h4>
                 <ol class="list-unstyled mb-0">
-                  <li><a href="#">Variables</a></li>
-                  <li><a href="#">Data Types</a></li>
-                  <li><a href="#">Logic Statements: If, Elif and Else</a></li>
-                  <li><a href="#">Lists</a></li>
-                  <li><a href="#">Loops: For and Whiles</a></li>
-                  <li><a href="#">Functions</a></li>
-                  <li><a href="#">Functions Parameters</a></li>
-                  <li><a href="#">Dictionaries</a></li>
-                  <li><a href="#">Object Oriented Programming (OOP)</a></li>
-                  <li><a href="#">Libraries</a></li>
-                  <li><a href="#">Flask</a></li>
-                  <li><a href="#">Django</a></li>
+                  <li><a href="{% url 'search' 'Variables' %}">Variables</a></li>
+                  <li><a href="{% url 'search' 'Data Types' %}">Data Types</a></li>
+                  <li><a href="{% url 'search' 'Logic Statements' %}">Logic Statements: If, Elif and Else</a></li>
+                  <li><a href="{% url 'search' 'Lists' %}">Lists</a></li>
+                  <li><a href="{% url 'search' 'Loops' %}">Loops: For and Whiles</a></li>
+                  <li><a href="{% url 'search' 'Functions' %}">Functions</a></li>
+                  <li><a href="{% url 'search' 'Dictionaries' %}">Dictionaries</a></li>
+                  <li><a href="{% url 'search' 'Object Oriented Programming' %}">Object Oriented Programming (OOP)</a></li>
+                  <li><a href="{% url 'search' 'Libraries' %}">Libraries</a></li>
+                  <li><a href="{% url 'search' 'Flask' %}">Flask</a></li>
+                  <li><a href="{% url 'search' 'Django' %}">Django</a></li>
                 </ol>
               </div>
             </div>

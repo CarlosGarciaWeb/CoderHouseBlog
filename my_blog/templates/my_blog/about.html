@@ -42,14 +42,33 @@
 
   </p>
   <p>Thanks for taking the time to read. Click <a href="/">here</a> to go back to the home page and read my latest posts.</p>
+<br><br>
+<!-- 
+<h3>Want to know a little more or contact me? See below.</h3>
+<br>
+<div class="row">
+  <div class="card mb-3 bg-grey text-white" style="max-width: 540px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <br>
+        <img src="{{ admin_user.userprofile.profile_picture.url }}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ admin_user.username }}</h5>
+          <p class="card-text">{{ admin_user.userprofile.bio }}</p>
+          <p class="card-text"><span class="text-muted"><a href="{{ admin_user.userprofile.linkedin_link }}"><i class="fa-brands fa-linkedin"></i></a> | <a href="{{ admin_user.userprofile.portfolio_link }}"><i class="fa-solid fa-globe"></i></a> </span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 
 </div>
 
 <div class="col-md-4">
     <div class="position-sticky" style="top: 2rem;">
       <div class="p-4 mb-3 rounded">
-        <!-- <h4 class="fst-italic">About</h4>
-    <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p> -->
         <div class="">
           <form class="form" id="search-bar" method="POST">
             {% csrf_token %}
@@ -61,18 +80,17 @@
         <div class="p-4">
           <h4 class="fst-italic">Topics</h4>
           <ol class="list-unstyled mb-0">
-            <li><a href="#">Variables</a></li>
-            <li><a href="#">Data Types</a></li>
-            <li><a href="#">Logic Statements: If, Elif and Else</a></li>
-            <li><a href="#">Lists</a></li>
-            <li><a href="#">Loops: For and Whiles</a></li>
-            <li><a href="#">Functions</a></li>
-            <li><a href="#">Functions Parameters</a></li>
-            <li><a href="#">Dictionaries</a></li>
-            <li><a href="#">Object Oriented Programming (OOP)</a></li>
-            <li><a href="#">Libraries</a></li>
-            <li><a href="#">Flask</a></li>
-            <li><a href="#">Django</a></li>
+            <li><a href="{% url 'search' 'Variables' %}">Variables</a></li>
+            <li><a href="{% url 'search' 'Data Types' %}">Data Types</a></li>
+            <li><a href="{% url 'search' 'Logic Statements' %}">Logic Statements: If, Elif and Else</a></li>
+            <li><a href="{% url 'search' 'Lists' %}">Lists</a></li>
+            <li><a href="{% url 'search' 'Loops' %}">Loops: For and Whiles</a></li>
+            <li><a href="{% url 'search' 'Functions' %}">Functions</a></li>
+            <li><a href="{% url 'search' 'Dictionaries' %}">Dictionaries</a></li>
+            <li><a href="{% url 'search' 'Object Oriented Programming' %}">Object Oriented Programming (OOP)</a></li>
+            <li><a href="{% url 'search' 'Libraries' %}">Libraries</a></li>
+            <li><a href="{% url 'search' 'Flask' %}">Flask</a></li>
+            <li><a href="{% url 'search' 'Django' %}">Django</a></li>
           </ol>
         </div>
       </div>

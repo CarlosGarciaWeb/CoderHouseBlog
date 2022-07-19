@@ -1,11 +1,9 @@
-from pydoc_data.topics import topics
 from django.views.generic import CreateView, UpdateView, DeleteView
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from .models import Post, Topics, UserProfile
-from django.http import HttpRequest, HttpResponseRedirect
+from .models import Post, Topics
+from django.http import  HttpResponseRedirect
 from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm
 import os
 import random
@@ -50,13 +48,16 @@ def Home(request):
 
 
 def About(request):
+    admin_user = User.objects.get(id=1)
     form = SearchForm(request.POST)
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
             search_term = form.cleaned_data['search_term']
             return redirect(reverse('search', kwargs={'search_term': search_term}))
-    return render(request, template_pages['about'], context={'form': form})
+    else:
+        pass
+    return render(request, template_pages['about'], context={'form': form, 'admin_user': admin_user})
 
 
 def BlogPost(request, blog_slug):
@@ -163,19 +164,31 @@ class DeletePostView(DeleteView):
 
 
 def SearchedPostView(request, search_term):
-
+    topic_ids = Topics.objects.filter(topic_tag__contains=search_term)
+    topic_post_list = []
+    for item in topic_ids:
+        topic_post_list.extend(Post.objects.filter(topic_tag=item.id))
+    topic_post_list = list(dict.fromkeys(topic_post_list))
     all_posts = Post.objects.all()
     post_data = Post.objects.filter(title__contains=search_term) | Post.objects.filter(blog_content__contains=search_term)
     first_post = all_posts[0]
     most_likes = max([post.total_likes() for post in all_posts])
     most_liked = [post for post in all_posts if post.total_likes() == most_likes]
     most_liked = random.choice(most_liked)
+    
+
+    for item in post_data:
+        if item in topic_post_list:
+            index_item = topic_post_list.index(item)
+            topic_post_list.pop(index_item)
+
+    total_found = len(post_data) + len(topic_post_list)
     search_found = False
-    total_found = len(post_data)
-    if len(post_data) > 0:    
+    if total_found> 0:    
         search_found = True
     else:
         search_found = False
+
     form = SearchForm()
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -190,6 +203,7 @@ def SearchedPostView(request, search_term):
         'search_term': search_term,
         'total_found': total_found,
         'form': form,
+        'post_with_topics': topic_post_list
     }
     return render(request, template_pages['search_post'], context=context)
 
