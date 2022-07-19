@@ -1,5 +1,6 @@
+from turtle import width
 from django import forms
-from .models import Post
+from .models import Post, UserProfile
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from captcha.fields import ReCaptchaField
@@ -38,6 +39,19 @@ class PostForm(forms.ModelForm):
             'blog_content': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
+class EditProfileDetailsForm(forms.ModelForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    
+    class Meta:
+        model = UserProfile
+        fields = ('profile_picture', 'linkedin_link', 'github_link', 'portfolio_link', 'bio')
+        widgets = {
+            'linkedin_link': forms.URLInput(attrs={'class': 'form-control'}),
+            'github_link': forms.URLInput(attrs={'class': 'form-control'}),
+            'portfolio_link': forms.URLInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
 
 class ProfileChangeForm(UserChangeForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
@@ -48,6 +62,8 @@ class ProfileChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'captcha')
+
+
     
 
     def __init__(self, *args, **kwargs):

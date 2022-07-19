@@ -2,9 +2,9 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from .models import Post, Topics
+from .models import Post, Topics, UserProfile
 from django.http import  HttpResponseRedirect
-from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm
+from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm, EditProfileDetailsForm
 import os
 import random
 # Create your views here.
@@ -121,12 +121,32 @@ def Like(request, pk):
 
 
 def UserView(request, user_name):
+    form = EditProfileDetailsForm()
     user_id = User.objects.get(username=request.user)
-    
+
+    if request.method == "POST":
+        form = EditProfileDetailsForm(request.POST)
+        if form.is_valid():
+            user_profile = UserProfile.objects.get(id=request.user.id)
+            update_data = form.cleaned_data
+            print(update_data)
+            if update_data['profile_picture']:
+                user_profile.profile_picture = update_data['profile_picture']
+            if update_data['linkedin_link']:
+                user_profile.linkedin_link = update_data['linkedin_link']
+            if update_data['github_link']:
+                user_profile.github_link = update_data['github_link']
+            if update_data['portfolio_link']:
+                user_profile.portfolio_link = update_data['portfolio_link']
+            if update_data['bio']:
+                 user_profile.bio = update_data['bio']
+            user_profile.save()
+            return redirect(reverse_lazy('Home'))
     liked_posts = Post.objects.filter(likes=user_id)
 
     context = {
-        'liked_post_all': liked_posts,        
+        'liked_post_all': liked_posts, 
+        'form': form,       
     }
     return render(request, template_pages['user'], context=context)
 

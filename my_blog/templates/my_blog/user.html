@@ -75,7 +75,15 @@
       <br>
       <p>{{ user.userprofile.bio }}</p>
       <br>
-    </div>
+<div>
+  <form class="form-control" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button class="btn btn-sm"> Save changes </button>
+  </form>
+</div>      
+</div>
 {% else %}
 {% endif %}
     <br>

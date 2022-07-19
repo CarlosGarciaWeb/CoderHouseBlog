@@ -47,7 +47,8 @@ class Comments(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=250)
+    bio = models.TextField(max_length=250, null=True, blank=True)
+
     profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pic/")
     github_link = models.URLField(null=True, blank=True)
     linkedin_link = models.URLField(null=True, blank=True)
