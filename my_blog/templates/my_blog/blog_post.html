@@ -54,8 +54,6 @@
         <br>
         {% if not post.comments.all %}
 
-        <p>There are no comments in this post yet. <a href="#">Click here to add one</a></p>
-
         {% else %}
 
           {% for comment in post.comments.all %}
@@ -77,10 +75,16 @@
             
               <div class="text-center">
             <p>
-              {{ comment.body }}
+              {{ comment.comment }}
             </p>
           </div>
           <br>
+
+          <div class="text-right">
+            {% if comment.user_name == user %}
+              <p>(<small><em><a href="{% url 'update_comment' comment.pk %}">Edit</a></em></small>)  |  (<small><em><a href="{% url 'delete_comment' comment.pk %}">Delete</a></em></small>)</p>
+            {% endif %}
+          </div>
           </div>
           <br>
           {% endfor %}

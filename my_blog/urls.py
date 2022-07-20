@@ -15,5 +15,7 @@ urlpatterns = [
     path('login/', views.Registration.as_view(template_name='registration/login.html'), name='login'),
     path('edit-post/<slug:pk>', views.UpdatePostView.as_view(), name='update'),
     path('delete-post/<slug:pk>', views.DeletePostView.as_view(), name='delete'),
+    path('edit-comment/<slug:pk>', views.CommentUpdateView.as_view(), name='update_comment'),
+    path('delete-comment/<slug:pk>', views.DeleteCommentView.as_view(), name='delete_comment'),
     path('search/<str:search_term>', views.SearchedPostView, name='search')
 ]

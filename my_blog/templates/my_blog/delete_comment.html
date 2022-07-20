@@ -1,0 +1,67 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title %}
+
+<title>Delete comment | Python Novice Blog</title>
+
+{% endblock title %}
+
+{% block meta %}
+
+<meta name="description" content="Edit comment">
+
+{% endblock meta %}
+
+{% block content %}
+<main class="container text-align-center">
+    <br>
+{% if user.is_authenticated %}
+
+{% if user == comments.user_name %}
+
+    <h1>Delete Comment</h1>
+    <br>
+    <br>
+    <span class="container mark border border-dark">{{ comments.comment }}</span>
+    <br>
+    <br>
+    <h2>Would you prefer to edit this comment? <a href="{% url 'update_comment' comments.pk %}">Click here</a> to edit.</h2>
+    <br>
+    <br>
+<div class="form-group">
+    <h2>If you are sure you want to continue with the deletion of this comment, click the delete button below.</h2>
+    <br>
+    <br>
+    <form method="POST" action="">
+
+        {% csrf_token %}
+
+        <button class="btn btn-danger"> Delete </button>
+
+    </form>
+</div>
+
+{% else %}
+
+<h1>You don't have access to delete this comment.</h1>
+
+
+<br><br>
+<a href="{% url 'Home' %}">Home</a>
+
+{% endif %}
+
+{% else %}
+
+
+<br>
+
+<p class="h1">You must be logged in to delete a comment.</p>
+
+<a href="{% url 'login' %}">Click here to login.</a>
+
+
+{% endif %}
+</main>
+
+{% endblock content %}

@@ -20,7 +20,9 @@ template_pages = {
     'edit_profile': template_path+'edit_profile.html',
     'edit_post': template_path+'edit_post.html',
     'delete_post': template_path+'delete_post.html',
-    'search_post': template_path+'search_posts.html'
+    'search_post': template_path+'search_posts.html',
+    'edit_comment': template_path+'edit_comment.html',
+    'delete_comment': template_path+'delete_comment.html'
 }
 
 def Home(request):
@@ -102,9 +104,11 @@ def BlogPost(request, blog_slug):
     if request.method == "POST" and "comment" in request.POST:
         comment_form = CommentForm(request.POST ,initial={'user_name': request.user, 'post': post_data})
         if comment_form.is_valid():
+            print(f"\n {request.user}\n {post_data}")
             data = comment_form.cleaned_data
-            comment = Comments(user_name=request.user, post=post_data, body=data['body'])
-            comment.save()
+            new_comment = Comments(user_name=request.user, post=post_data, comment=data['comment'])
+            new_comment.save()
+            print("What is going on!")
             return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))
     context = {
         "post": post_data,
@@ -242,3 +246,17 @@ def SearchedPostView(request, search_term):
 class Registration(CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('login')
+
+
+class CommentUpdateView(UpdateView):
+    form_class = CommentForm
+    model = Comments
+    template_name = template_pages['edit_comment']
+    success_url = reverse_lazy('Home')
+
+
+class DeleteCommentView(DeleteView):
+    form_class = CommentForm
+    model = Comments
+    template_name = template_pages['delete_comment']
+    success_url = reverse_lazy('Home')

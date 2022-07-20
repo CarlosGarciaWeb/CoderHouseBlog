@@ -1,0 +1,62 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title %}
+
+<title>Edit Post | Python Novice Blog</title>
+
+{% endblock title %}
+
+{% block meta %}
+
+<meta name="description" content="Edit Post">
+
+{% endblock meta %}
+
+{% block content %}
+<main class="container text-align-center">
+    <br>
+{% if user.is_authenticated %}
+
+{% if user == comments.user_name %}
+
+    <h1>Edit Comment</h1>
+    <br>
+    <br>
+
+
+<div style="width: 50%;" class="form-group">
+
+    <form method="POST" action="">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn btn-secondary"> Edit </button>
+
+    </form>
+</div>
+
+{% else %}
+
+<h1>You don't have access to edit this comment.</h1>
+
+
+<br><br>
+<a href="{% url 'Home' %}">Home</a>
+
+{% endif %}
+
+{% else %}
+
+
+<br>
+
+<p class="h1">You must be logged in to edit a comment.</p>
+
+<a href="{% url 'login' %}">Click here to login.</a>
+
+
+{% endif %}
+</main>
+
+{% endblock content %}
