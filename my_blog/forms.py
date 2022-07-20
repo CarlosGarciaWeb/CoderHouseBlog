@@ -1,3 +1,4 @@
+from cProfile import label
 from tkinter import Widget
 from turtle import width
 from django import forms
@@ -54,11 +55,18 @@ class EditProfileDetailsForm(forms.ModelForm):
         }
 
 
-# class CommentForm(forms.ModelForm):
-#     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+class CommentForm(forms.ModelForm):
+    # captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
-#     class Meta:
-#         model = Comments
+
+    class Meta:
+        model = Comments
+        fields = ('body', 'user_name', 'post')
+        widgets = {
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Comment', 'required': 'True'}),
+            'user_name': forms.HiddenInput(),
+            'post': forms.HiddenInput()
+        }
 
 
 class ProfileChangeForm(UserChangeForm):

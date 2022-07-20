@@ -78,11 +78,21 @@
               <div class="text-center">
             <p>
               {{ comment.body }}
-            </p></div>
-<br></div><br>
+            </p>
+          </div>
+          <br>
+          </div>
+          <br>
           {% endfor %}
 
         {% endif %}
+      </div>
+        <div>
+        <form action="" class="form-control" method="POST">
+          {% csrf_token %}
+          {{ comment_form.as_p }}
+          <button class="btn btn-sm" type="submit" name="comment">Comment</button>
+        </form>
       </div>
     </div>
 
@@ -93,7 +103,7 @@
             <form class="form" id="search-bar" method="POST">
               {% csrf_token %}
               {{ form.as_table }}
-                <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="btn btn-sm btn-secondary" type="submit" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
             </div>
     

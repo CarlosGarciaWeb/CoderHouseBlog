@@ -2,9 +2,9 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from .models import Post, Topics, UserProfile
+from .models import Post, Topics, UserProfile, Comments
 from django.http import  HttpResponseRedirect
-from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm, EditProfileDetailsForm
+from .forms import PostForm, SignUpForm, ProfileChangeForm, SearchForm, EditProfileDetailsForm, CommentForm
 import os
 import random
 # Create your views here.
@@ -90,12 +90,22 @@ def BlogPost(request, blog_slug):
 
     if post_data.likes.filter(id=request.user.id).exists():
         liked = True
+    
     form = SearchForm()
-    if request.method == 'POST':
+    comment_form = CommentForm(initial={'user_name': request.user, 'post': post_data})
+    if request.method == 'POST' and 'search' in request.POST:
         form = SearchForm(request.POST)
         if form.is_valid():
             search_term = form.cleaned_data['search_term']
             return redirect(reverse('search', kwargs={'search_term': search_term}))
+    
+    if request.method == "POST" and "comment" in request.POST:
+        comment_form = CommentForm(request.POST ,initial={'user_name': request.user, 'post': post_data})
+        if comment_form.is_valid():
+            data = comment_form.cleaned_data
+            comment = Comments(user_name=request.user, post=post_data, body=data['body'])
+            comment.save()
+            return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))
     context = {
         "post": post_data,
         "likes": total_likes,
@@ -103,6 +113,7 @@ def BlogPost(request, blog_slug):
         'post_featured': new_feature_post,
         'form': form,
         'header_image_bool': header_image_bool,
+        'comment_form': comment_form,
     }
     return render(request, template_pages['blog_post'], context=context)
 
@@ -122,6 +133,7 @@ def Like(request, pk):
 
 def UserView(request, user_name):
     form = EditProfileDetailsForm()
+    
     user_id = User.objects.get(username=request.user)
 
     if request.method == "POST":
