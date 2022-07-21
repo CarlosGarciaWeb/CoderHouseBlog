@@ -96,7 +96,7 @@
     <br>
         <div class="col-6">
           <h3>Liked Posts</h3>
-          
+          {% if liked_post_all %}
           <ul>
               {% for liked_post in liked_post_all %}
 
@@ -104,11 +104,13 @@
 
               {% endfor %}
           </ul>
-
+          {% else %}
+          <br>
+          <p>You do not have any liked posts.</p>
+          <br>
+          {% endif %}
         </div>
-        <!-- <div class="col-6">
-          <h3>Posts saved for later</h3>
-        </div> -->
+
     </div>  
 
 

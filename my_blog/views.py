@@ -68,10 +68,10 @@ def BlogPost(request, blog_slug):
     most_likes = max([post.total_likes() for post in all_post_data])
     most_liked_all = [post for post in all_post_data if post.total_likes() == most_likes]
     most_liked = random.choice(most_liked_all)
-    most_liked_index = 0
-    updated_post_data_index = 0
+    most_liked_index = None
+    updated_post_data_index = None
     updated_post_data = [post for post in Post.objects.all()]
-    new_feature_post = ""
+    new_feature_post = None
     if most_liked.slug_post == blog_slug:
         most_liked_index = most_liked_all.index(most_liked)
         updated_post_data_index = updated_post_data.index(most_liked)
@@ -109,11 +109,9 @@ def BlogPost(request, blog_slug):
             data = comment_form.cleaned_data
             new_comment = Comments(user_name=request.user, post=post_data, comment=data['comment'])
             new_comment.save()
-            print("What is going on!")
             return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))
-        else:
-            print(f"\nI am here\n")
-            # print(comment_form.user_name, comment_form.post)
+    # all_post_comments = post_data.comments.all
+    # all_post_comments = all_post_comments
     context = {
         "post": post_data,
         "likes": total_likes,
@@ -282,7 +280,6 @@ class CommentUpdateView(UpdateView):
 
 
 class DeleteCommentView(DeleteView):
-    form_class = CommentForm
     model = Comments
     template_name = template_pages['delete_comment']
     success_url = reverse_lazy('Home')
