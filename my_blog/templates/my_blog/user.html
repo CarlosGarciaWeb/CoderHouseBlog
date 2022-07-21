@@ -79,6 +79,9 @@
       <br>
 
 {% else %}
+
+ 
+{% endif %}
 <div class="">
   <form class="form-control" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -88,8 +91,7 @@
   </form>
 </div> 
 </div>
- 
-{% endif %}
+
     <br>
     <br>
         <div class="col-6">

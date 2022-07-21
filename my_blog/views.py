@@ -145,23 +145,45 @@ def UserView(request, user_name):
     user_id = User.objects.get(username=request.user)
 
     if request.method == "POST":
-        form = EditProfileDetailsForm(request.POST)
+        form = EditProfileDetailsForm(request.POST, request.FILES)
         if form.is_valid():
-            user_profile = UserProfile.objects.get(id=user_id.id)
             update_data = form.cleaned_data
-            print(update_data)
-            if update_data['profile_picture']:
-                user_profile.profile_picture = update_data['profile_picture']
-            if update_data['linkedin_link']:
-                user_profile.linkedin_link = update_data['linkedin_link']
-            if update_data['github_link']:
-                user_profile.github_link = update_data['github_link']
-            if update_data['portfolio_link']:
-                user_profile.portfolio_link = update_data['portfolio_link']
-            if update_data['bio']:
-                 user_profile.bio = update_data['bio']
-            user_profile.save()
-            return redirect(reverse_lazy('Home'))
+            if len(UserProfile.objects.filter(user=user_id)) > 0:
+                user_profile = UserProfile.objects.get(user=user_id)
+                print(update_data)
+                if update_data['profile_picture']:
+                    user_profile.profile_picture = update_data['profile_picture']
+                    print(update_data['profile_picture'])
+                if update_data['linkedin_link']:
+                    user_profile.linkedin_link = update_data['linkedin_link']
+                if update_data['github_link']:
+                    user_profile.github_link = update_data['github_link']
+                if update_data['portfolio_link']:
+                    user_profile.portfolio_link = update_data['portfolio_link']
+                if update_data['bio']:
+                    user_profile.bio = update_data['bio']
+                user_profile.save()
+                return redirect(reverse_lazy('Home'))
+            else:
+                print('I am here')
+                user_picture = None
+                user_linkedin = None
+                user_github = None
+                user_portfolio = None
+                user_bio = None
+                if update_data['profile_picture']:
+                    user_picture = update_data['profile_picture']
+                if update_data['linkedin_link']:
+                    user_linkedin = update_data['linkedin_link']
+                if update_data['github_link']:
+                    user_github = update_data['github_link']
+                if update_data['portfolio_link']:
+                    user_portfolio = update_data['portfolio_link']
+                if update_data['bio']:
+                    user_bio = update_data['bio']
+                new_profile = UserProfile(user=user_id, profile_picture=user_picture, linkedin_link=user_linkedin, github_link=user_github, portfolio_link=user_portfolio, bio=user_bio)
+                new_profile.save()
+                return redirect(reverse_lazy('Home'))
     liked_posts = Post.objects.filter(likes=user_id)
 
     context = {
