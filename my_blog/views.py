@@ -110,8 +110,7 @@ def BlogPost(request, blog_slug):
             new_comment = Comments(user_name=request.user, post=post_data, comment=data['comment'])
             new_comment.save()
             return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))
-    # all_post_comments = post_data.comments.all
-    # all_post_comments = all_post_comments
+    all_post_comments = post_data.comments.all().order_by('-date')
     context = {
         "post": post_data,
         "likes": total_likes,
@@ -120,6 +119,7 @@ def BlogPost(request, blog_slug):
         'form': form,
         'header_image_bool': header_image_bool,
         'comment_form': comment_form,
+        'post_comments': all_post_comments
     }
     return render(request, template_pages['blog_post'], context=context)
 
@@ -276,10 +276,48 @@ class CommentUpdateView(UpdateView):
     form_class = CommentForm
     model = Comments
     template_name = template_pages['edit_comment']
-    success_url = reverse_lazy('Home')
+
+    # success_url = 'Home'
+    
+    def get(self, request, *args, **kwargs):
+        comments = Comments.objects.get(id=kwargs['pk'])
+        print('I am happy',  1)
+        self.initial = {'post': comments.post, 'user_name': comments.user_name, 'comment': comments.comment}
+        form_update = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form_update, 'comments': comments})
+
+    def post(self, request, *args, **kwargs):
+
+        form_update = self.form_class(request.POST)
+        if form_update.is_valid():
+            comments = Comments.objects.get(id=kwargs['pk'])
+            post_id = comments.post.id
+            post_data = Post.objects.get(id=post_id)
+            
+            data = form_update.cleaned_data
+            comments.comment = data['comment']
+            comments.save()
+            return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))
+        return render(request, self.template_name, {'form':form_update})
 
 
 class DeleteCommentView(DeleteView):
     model = Comments
     template_name = template_pages['delete_comment']
-    success_url = reverse_lazy('Home')
+
+    def get(self, request, *args, **kwargs):
+        comments = Comments.objects.get(id=kwargs['pk'])
+        print('I am happy',  1)
+        self.initial = {'post': comments.post, 'user_name': comments.user_name, 'comment': comments.comment}
+        form_update = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form_update, 'comments': comments})
+
+    def post(self, request, *args, **kwargs):
+
+        form_update = self.form_class(request.POST)
+        if form_update.is_valid():
+            comments = Comments.objects.get(id=kwargs['pk'])
+            post_id = comments.post.id
+            post_data = Post.objects.get(id=post_id)
+            comments.delete()
+            return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))

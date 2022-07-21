@@ -22,7 +22,8 @@
     <h1>Delete Comment</h1>
     <br>
     <br>
-    <span class="container mark border border-dark">{{ comments.comment }}</span>
+    <p>Your comment -- </p><span class="container mark border border-dark">{{ comments.comment }}</span> <br>
+    <br><p> -- {{ comments.date }}</p>
     <br>
     <br>
     <h2>Would you prefer to edit this comment? <a href="{% url 'update_comment' comments.pk %}">Click here</a> to edit.</h2>

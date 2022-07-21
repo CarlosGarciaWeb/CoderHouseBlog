@@ -56,7 +56,7 @@
 
         {% else %}
 
-          {% for comment in post.comments.all %}
+          {% for comment in post_comments %}
           <div class="container-sm rounded comment-section">
             <p style="margin-top: 5px;">
             {% if comment.user_name.userprofile.profile_picture.url %}
@@ -69,9 +69,9 @@
             {{ comment.user_name }} | <small>{{ comment.date }}</small></p>
 
             
-            <p>{% if user.userprofile.github_link %}<a href="{{ user.userprofile.github_link }}"><i class="fa-brands fa-github"></i></a>  |   {% endif %} 
-              {% if user.userprofile.linkedin_link %}<a href="{{ user.userprofile.linkedin_link }}"><i class="fa-brands fa-linkedin"></i></a>  |   {% endif %}
-              {% if user.userprofile.portfolio_link %}<a href="{{ user.userprofile.portfolio_link }}"><i class="fa-solid fa-globe"></i></a>{% endif %}</p>                     
+            <p>{% if comment.user_name.userprofile.github_link %}<a href="{{ comment.user_name.userprofile.github_link }}"><i class="fa-brands fa-github"></i></a>  |   {% endif %} 
+              {% if comment.user_name.userprofile.linkedin_link %}<a href="{{ comment.user_name.userprofile.linkedin_link }}"><i class="fa-brands fa-linkedin"></i></a>  |   {% endif %}
+              {% if comment.user_name.userprofile.portfolio_link %}<a href="{{ comment.user_name.userprofile.portfolio_link }}"><i class="fa-solid fa-globe"></i></a>{% endif %}</p>                     
             
               <div class="text-center">
             <p>
