@@ -61,11 +61,11 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comments
-        fields = ('comment', 'user_name', 'post')
+        fields = ('user_name', 'post', 'comment',)
         widgets = {
-            'comment': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Comment'}),
-            'user_name': forms.Select(),
-            'post': forms.Select(),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'required': 'True'}),
+            'user_name': forms.HiddenInput(),
+            'post': forms.HiddenInput(),
         }
 
 

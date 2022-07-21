@@ -94,15 +94,16 @@ def BlogPost(request, blog_slug):
         liked = True
     
     form = SearchForm()
-    comment_form = CommentForm(initial={'user_name': request.user, 'post': post_data})
+    
     if request.method == 'POST' and 'search' in request.POST:
         form = SearchForm(request.POST)
         if form.is_valid():
             search_term = form.cleaned_data['search_term']
             return redirect(reverse('search', kwargs={'search_term': search_term}))
-    
-    if request.method == "POST" and "comment" in request.POST:
-        comment_form = CommentForm(request.POST ,initial={'user_name': request.user, 'post': post_data})
+
+    comment_form = CommentForm(initial={'user_name': request.user, 'post': post_data, "comment": ""})
+    if request.method == "POST" and "comments" in request.POST:
+        comment_form = CommentForm(request.POST , initial={'user_name': request.user, 'post': post_data, 'comment': "Comment"})
         if comment_form.is_valid():
             print(f"\n {request.user}\n {post_data}")
             data = comment_form.cleaned_data
@@ -110,6 +111,9 @@ def BlogPost(request, blog_slug):
             new_comment.save()
             print("What is going on!")
             return redirect(reverse('blogpost', kwargs={'blog_slug': post_data.slug_post}))
+        else:
+            print(f"\nI am here\n")
+            # print(comment_form.user_name, comment_form.post)
     context = {
         "post": post_data,
         "likes": total_likes,
@@ -143,7 +147,7 @@ def UserView(request, user_name):
     if request.method == "POST":
         form = EditProfileDetailsForm(request.POST)
         if form.is_valid():
-            user_profile = UserProfile.objects.get(id=request.user.id)
+            user_profile = UserProfile.objects.get(id=user_id.id)
             update_data = form.cleaned_data
             print(update_data)
             if update_data['profile_picture']:

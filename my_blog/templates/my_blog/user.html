@@ -36,11 +36,13 @@
     <div class="row">
         <h1>Welcome, {{ user }}! </h1> <div class="position-relative end-40"><em><a href="{% url 'add_post' %}">Add Post</a></em> / <em><a href="{% url 'edit_profile' %}">Edit Profile</a></em></div>
     </div>
-{% if user.userprofile.profile_picture %}
     <br>
     <br>
     <div class="row">
       <div class="col-6">
+{% if user.userprofile.profile_picture %}
+
+
       <br>
       <div class="container rounded-circle">
       <img src="{{ user.userprofile.profile_picture.url }}" alt="Python Novice Writer">
@@ -75,16 +77,18 @@
       <br>
       <p>{{ user.userprofile.bio }}</p>
       <br>
-<div>
+
+{% else %}
+<div class="">
   <form class="form-control" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
     <button class="btn btn-sm"> Save changes </button>
   </form>
-</div>      
+</div> 
 </div>
-{% else %}
+ 
 {% endif %}
     <br>
     <br>
