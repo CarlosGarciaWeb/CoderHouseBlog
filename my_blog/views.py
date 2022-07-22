@@ -148,10 +148,9 @@ def UserView(request, user_name):
             update_data = form.cleaned_data
             if len(UserProfile.objects.filter(user=user_id)) > 0:
                 user_profile = UserProfile.objects.get(user=user_id)
-                print(update_data)
+                user_id = User.objects.get(username=request.user)
                 if update_data['profile_picture']:
                     user_profile.profile_picture = update_data['profile_picture']
-                    print(update_data['profile_picture'])
                 if update_data['linkedin_link']:
                     user_profile.linkedin_link = update_data['linkedin_link']
                 if update_data['github_link']:
@@ -160,10 +159,12 @@ def UserView(request, user_name):
                     user_profile.portfolio_link = update_data['portfolio_link']
                 if update_data['bio']:
                     user_profile.bio = update_data['bio']
+                print(user_profile)
                 user_profile.save()
-                return redirect(reverse_lazy('Home'))
+                print(update_data['linkedin_link'], update_data['github_link'], update_data['portfolio_link'])
+                return redirect(reverse('users', kwargs={'user_name':user_id}))
             else:
-                print('I am here')
+                user_id = User.objects.get(username=request.user)
                 user_picture = None
                 user_linkedin = None
                 user_github = None
@@ -181,7 +182,7 @@ def UserView(request, user_name):
                     user_bio = update_data['bio']
                 new_profile = UserProfile(user=user_id, profile_picture=user_picture, linkedin_link=user_linkedin, github_link=user_github, portfolio_link=user_portfolio, bio=user_bio)
                 new_profile.save()
-                return redirect(reverse_lazy('Home'))
+                return redirect(reverse('users', kwargs={'user_name':user_id}))
     liked_posts = Post.objects.filter(likes=user_id)
 
     context = {
