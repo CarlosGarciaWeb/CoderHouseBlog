@@ -20,6 +20,7 @@
 <div class="form-group">
 <form action="" method="POST">
     {% csrf_token %}
+    {{ form.media }}
     {{ form.as_p }}
     <br>
     <button class="btn btn-secondary"> Save Changes </button>

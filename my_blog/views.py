@@ -200,6 +200,7 @@ class UserEditView(UpdateView):
         return self.request.user
 
 
+
 class AddPostView(CreateView):
     model = Post
     form_class = PostForm

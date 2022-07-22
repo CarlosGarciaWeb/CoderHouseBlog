@@ -56,7 +56,7 @@ class EditProfileDetailsForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-    # captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
 
     class Meta:
