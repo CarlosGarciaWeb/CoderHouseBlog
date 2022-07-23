@@ -59,7 +59,7 @@
           {% for comment in post_comments %}
           <div class="container-sm rounded comment-section">
             <p style="margin-top: 5px;">
-            {% if comment.user_name.userprofile.profile_picture.url %}
+            {% if comment.user_name.userprofile.profile_picture %}
             <img style="margin-top: 5px;" width="75" src="{{ comment.user_name.userprofile.profile_picture.url}}" alt="Profile Picture {{ comment.user_name }}">
             {% else %}
             <img style="margin-top: 5px;" width="75" src="{% static 'my_blog/images/default-profile-picture.png' %}" alt="Profile Picture {{ comment.user_name }}"> 

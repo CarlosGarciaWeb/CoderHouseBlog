@@ -153,7 +153,7 @@ def UserView(request, user_name):
                 user_profile = UserProfile.objects.get(user=user_id)
                 user_id = User.objects.get(username=request.user)
                 if update_data['profile_picture']:
-                    user_profile.profile_picture = update_data['profile_picture']
+                    user_profile.profile_picture = None
                 if update_data['linkedin_link']:
                     user_profile.linkedin_link = update_data['linkedin_link']
                 if update_data['github_link']:
@@ -173,8 +173,6 @@ def UserView(request, user_name):
                 user_github = None
                 user_portfolio = None
                 user_bio = None
-                if update_data['profile_picture']:
-                    user_picture = update_data['profile_picture']
                 if update_data['linkedin_link']:
                     user_linkedin = update_data['linkedin_link']
                 if update_data['github_link']:

@@ -46,7 +46,7 @@ class EditProfileDetailsForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('profile_picture', 'linkedin_link', 'github_link', 'portfolio_link', 'bio')
+        fields = ('linkedin_link', 'github_link', 'portfolio_link', 'bio')
         widgets = {
             'linkedin_link': forms.URLInput(attrs={'class': 'form-control'}),
             'github_link': forms.URLInput(attrs={'class': 'form-control'}),
