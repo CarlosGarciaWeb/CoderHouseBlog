@@ -1,4 +1,5 @@
 {% extends 'my_blog/base.html' %}
+{% load static %}
 
 {% block title %}
 
@@ -34,20 +35,23 @@
 
 
     <div class="row">
-        <h1>Welcome, {{ user }}! </h1> <div class="position-relative end-40"><em><a href="{% url 'add_post' %}">Add Post</a></em> / <em><a href="{% url 'edit_profile' %}">Edit Profile</a></em></div>
+        <h1>Welcome, {{ user }}! </h1> 
+        <div class="position-relative end-40"><em><a href="{% url 'add_post' %}">Add Post</a></em> / <em><a href="{% url 'edit_profile' %}">Edit Profile</a></em></div>
     </div>
     <br>
     <br>
     <div class="row">
       <div class="col col-md-6">
 {% if user.userprofile.profile_picture %}
-
-
       <br>
       <div class="container rounded-circle">
-      <img src="{{ user.userprofile.profile_picture.url }}" alt="Python Novice Writer">
+      <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile picture">
     </div>
 {% else %}
+      <br>
+      <div class="container rounded-circle">
+      <img src="{% static 'my_blog/images/default-profile-picture.png' %}" alt="Default Profie Picture">
+      </div>
 {% endif %}
 
 
