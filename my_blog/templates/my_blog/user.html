@@ -36,7 +36,7 @@
 
     <div class="row">
         <h1>Welcome, {{ user }}! </h1> 
-        <div class="position-relative end-40"><em><a href="{% url 'add_post' %}">Add Post</a></em> / <em><a href="{% url 'edit_profile' %}">Edit Profile</a></em></div>
+        <div class="position-relative end-40">{% if user.is_superuser %}<em><a href="{% url 'add_post' %}">Add Post</a></em> / {% endif %}<em><a href="{% url 'edit_profile' %}">Edit Profile</a></em></div>
     </div>
     <br>
     <br>

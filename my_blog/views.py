@@ -77,7 +77,10 @@ def BlogPost(request, blog_slug):
         updated_post_data_index = updated_post_data.index(most_liked)
         most_liked_all.pop(most_liked_index)
         updated_post_data.pop(updated_post_data_index)
-        new_feature_post = random.choice(updated_post_data)
+        if len(updated_post_data) > 0:
+            new_feature_post = random.choice(updated_post_data)
+        else:
+            new_feature_post = most_liked
     else:
         new_feature_post = most_liked
     

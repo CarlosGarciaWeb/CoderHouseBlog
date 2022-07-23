@@ -31,7 +31,7 @@
             <h2 class="blog-post-title mb-1"><a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">{{ post.title }}</a></h2>
             <p class="blog-post-meta">{{ post.blog_date }} | <em>{{ post.user_name.first_name }} </em></p>
             <p><em>{{ post.total_likes }} likes</em>    {% if user == post.user_name %} <small><a class="blog-post-data" href="{% url 'update' post.pk %}">(<em>edit</em>)</a></small> / <small><a class="blog-post-data" href="{% url 'delete' post.pk %}">(<em>delete</em>)</a></small></p>{% endif %}
-            <br><br>{{ post.blog_content|safe|slice:":1000" }} <a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">...</a>
+            <br><br>{{ post.blog_content|safe|slice:":500" }} <a class="blog-post-data" href="{% url 'blogpost' post.slug_post %}">...</a>
             
             <p><em>Tags:</em>  {% for topic in post.topic_tag.all %}
             
@@ -67,7 +67,7 @@
                       <strong class="d-inline-block mb-2 text-black">Featured Post</strong>
                       <a href="{% url 'blogpost' most_liked.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ most_liked.title }}</h3></a>
                       <div class="mb-1 text-muted">{{ most_liked.blog_date}}</div>
-                      <div class="mb-1 text-muted">{{ most_liked.blog_meta|safe|slice:"100"}}...</div>
+                      <div class="mb-1 text-muted">{{ most_liked.blog_meta|safe|slice:"50"}}...</div>
                     </div>
 
                   </div>
@@ -82,7 +82,7 @@
                       <strong class="d-inline-block mb-2 text-black">Featured Post</strong>
                       <a href="{% url 'blogpost' most_liked.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ most_liked.title }}</h3></a>
                       <div class="mb-1 text-muted">{{ most_liked.blog_date}}</div>
-                      <div class="mb-1 text-muted">{{ most_liked.blog_meta|safe|slice:"100"}}...</div>
+                      <div class="mb-1 text-muted">{{ most_liked.blog_meta|safe|slice:"50"}}...</div>
 
                     </div>
 
@@ -99,7 +99,7 @@
                       <strong class="d-inline-block mb-2 text-dark">My First Post</strong>
                       <a href="{% url 'blogpost' first_post.slug_post %}" class="blog-post-data"><h3 class="mb-0">{{ first_post.title }}</h3></a>
                       <div class="mb-1 text-muted"><p>{{ first_post.blog_date }}</p> </div>
-                      <div class="mb-1 text-muted">{{ first_post.blog_meta|safe|slice:"100"}}...</div>
+                      <div class="mb-1 text-muted">{{ first_post.blog_meta|safe|slice:"50"}}...</div>
                       
                     </div>
                   </div>

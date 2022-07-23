@@ -17,6 +17,7 @@
     <br>
 {% if user.is_authenticated %}
 
+{% if user.is_superuser %}
 
     <h1>Add Post</h1>
 
@@ -35,13 +36,19 @@
 
 {% else %}
 
+<br>
+
+<p class="h1">I am sorry but right now posts are not available without admin permission.</p>
+
+{% endif %}
+
+{% else %}
 
 <br>
 
 <p class="h1">You must be logged in to create a post.</p>
 
 <a href="{% url 'login' %}">Click here to login.</a>
-
 
 {% endif %}
 </main>
