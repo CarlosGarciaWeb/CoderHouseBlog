@@ -139,3 +139,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Use pip install django-recaptcha
 RECAPTCHA_PUBLIC_KEY = os.environ.get("RESUME_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = os.environ.get("RESUME_PRIVATE_KEY")
+
+
+#Ckeditor Configs
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 'full',
+        'width': 'full'
+    }
+}

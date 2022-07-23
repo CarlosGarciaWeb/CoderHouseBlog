@@ -37,8 +37,8 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'topic_tag': forms.SelectMultiple(attrs={'class': 'form-check', 'type': 'checkbox'}),
-            'blog_meta': forms.Textarea(attrs={'class': 'form-control'}),
-            'blog_content': forms.Textarea(attrs={'class': 'form-control'}),
+            'blog_meta': forms.Textarea(attrs={'class': 'form-control', 'style': 'width: 100%'}),
+            'blog_content': forms.Textarea(attrs={'class': 'form-control', 'style': 'width: 100%'}),
         }
 
 class EditProfileDetailsForm(forms.ModelForm):
